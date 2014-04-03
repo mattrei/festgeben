@@ -1,0 +1,61 @@
+<head>
+  <title>festgeben</title>
+</head>
+
+<body>
+  {{> projects}}
+  {{> birthdayObject}}
+    
+<nav>
+  <a href="{{ pathFor 'about' }}">About</a>
+</nav>
+</body>
+
+<template name="birthdayObject">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        {{> birthdayForm}}
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="projects">
+  <h3>Projekte</h3>
+  {{#if loading}}
+    <div id="lists">Loading...</div>
+  {{else}}
+    <div id="lists">
+      {{#each projects}}
+        <div class="list {{selected}}">
+            <div class="display">
+              <a class="project-name {{name_class}}" href="/{{_id}}">
+                {{name}}
+              </a>
+               <p>{{text}}</p> 
+            </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="birthday">
+    Nicht gefunden!
+</template>
+
+<template name="about">
+    About!
+</template>
+
+<template name="notFound">
+  <div class="alert alert-error alert-block">
+    <h2>404 - Not found</h2>
+    <h4>Sorry, couldn't find that page :-(</h4>
+    <p>
+      <a href="{{rootPath}}">Take Me Home</a>
+    </p>
+  </div>
+</template>
