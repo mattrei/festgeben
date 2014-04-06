@@ -26,26 +26,31 @@ Meteor.startup(function () {
                                   logo: data[i].logo});
     }
 
-    var data = [
+    var data = 
       {title: "Christoph Chorherrs 50. Geburtstag",
        text: "Schreib hier warum ....",
        timestamp: (new Date()).getTime(),
-       day: "14",
-       month: "6",
+       day: 14,
+       month: 6,
+       year: 2014,
        active: true,
        pic: "public/cc.jpg",
        owner: "chr@chr.at",
+       slug: "b1",
+       privslug: "secret",
        projects_id: ["1","2"]
-      }
-    ];
-    Birthdays.insert({title: data[i].title,
-                                  text: data[i].text,
-                                  timestamp: data[i].timestamp,
-                                  day: data[i].day,
-                                  month: data[i].month,
-                                  active: data[i].active,
-                                  pic: data[i].pic,
-                                  owner: data[i].owner,
-                                  projects_id: data[i].projects_id});
+      };
+    Birthdays.insert({title: data.title,
+                                  text: data.text,
+                                  timestamp: data.timestamp,
+                                  day: data.day,
+                                  month: data.month,
+                                  year: data.year,
+                                  active: data.active,
+                                  pic: data.pic,
+                                  owner: data.owner,
+                                  slug: data.slug,
+                                  privslug: data.privslug,
+                                  projects_id: data.projects_id});
   }
 });

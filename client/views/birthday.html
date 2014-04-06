@@ -17,3 +17,30 @@
     <button type="submit" class="btn btn-default">Fest spenden</button>
   </form>
 </template>
+
+
+<template name="titleItem">
+    <h2>{{ title }}</h2>
+</template>
+
+<template name="textItem">
+    <p>{{ text }}</p>
+</template>
+
+<template name="birthday">
+    <h1>GEBURTSTAG!!!</h1>
+    {{#if editing}}
+        <div>
+          <div class="edit-title" contenteditable="true">{{ title }}</div>
+          <div class="edit-text" contenteditable="true">{{ text }}</div>
+        </div>
+    {{else}}
+        NO EDIT
+        <h2>{{ title }}</h2>
+        <p>{{ text }}</p>
+    {{/if}}
+</template>
+
+<template name="birthdayNotFound">
+    <h1>GEBURTSTAG NICHT GEFUNDEN!!!</h1>
+</template>

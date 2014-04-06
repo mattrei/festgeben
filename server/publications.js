@@ -13,9 +13,12 @@ Meteor.publish('projects', function () {
 //               timestamp: Number,
 //               day: Number,
 //               month: Number,
+//               year: Number,
 //               active: Boolean,
 //               pic: String,
 //               owner: String,
+//               slug: String,
+//               privslug: String,
 //               projects_id: [String, ...]}
 Birthdays = new Meteor.Collection("birthdays");
 Meteor.publish('birthdays', function () {

@@ -2,16 +2,53 @@
   <title>festgeben</title>
 </head>
 
+
+
 <body>
-  {{> projects}}
-  {{> birthdayObject}}
-    
-<nav>
-  <a href="{{ pathFor 'about' }}">About</a>
-</nav>
+  {{#Layout template="MyLayout"}}
+    This content will go into the main yield region.
+
+    {{#contentFor region="footer"}}
+      This is some footer content
+    {{/contentFor}}
+  {{/Layout}}
 </body>
 
-<template name="birthdayObject">
+<template name="MyLayout">
+  <h1>Festgeben</h1>
+
+  <div>
+    {{> yield}}
+  </div>
+
+  <footer>
+    {{> yield region="footer"}}
+  </footer>
+    <nav>
+      {{> navigation}}
+    </nav>
+</template>
+
+
+<template name="home">
+  <h1>Home</h1>
+  <p>This is the home page. Our users will land here when they visit the app for the first time. Nice!</p>
+    
+    {{> projects}}
+    {{> create_birthday}}
+</template>
+
+<template name="about">
+  <h1>About</h1>
+  <p>Routing is a simple app to show off routing in Meteor. It uses the <a href="#">Router</a> package written by Tom Coleman. Millions are just around the corner</p>
+</template>
+
+<template name="contact">
+  <h1>Contact</h1>
+  <p>Need to interview us for your blog about our sweet app? Email us at: <a href="mailto:haha@fakeapp.com">haha@fakeapp.com</a>.</p>
+</template>
+
+<template name="create_birthday">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
@@ -42,12 +79,13 @@
   {{/if}}
 </template>
 
-<template name="birthday">
-    Nicht gefunden!
-</template>
 
-<template name="about">
-    About!
+<template name="navigation">
+  <ul>
+    <li><a href="{{ pathFor 'home' }}">Home</a></li>
+    <li><a href="{{ pathFor 'about' }}">About</a></li>
+    <li><a href="{{ pathFor 'contact' }}">Contact</a></li>
+  </ul>
 </template>
 
 <template name="notFound">
@@ -55,7 +93,7 @@
     <h2>404 - Not found</h2>
     <h4>Sorry, couldn't find that page :-(</h4>
     <p>
-      <a href="{{rootPath}}">Take Me Home</a>
+      <a href="{{ pathFor 'home' }}">Take Me Home</a>
     </p>
   </div>
 </template>
