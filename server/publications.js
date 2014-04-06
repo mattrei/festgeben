@@ -4,13 +4,14 @@
 //              logo: String,
 //              contact: String}
 Projects = new Meteor.Collection("projects");
-Meteor.publish('projects', function () {
-  return Projects.find();
+Meteor.publish('projects', function() {
+    return Projects.find();
 });
 
 // Birthdays -- {title: String,
 //               text: String,
-//               timestamp: Number,
+//               created: Number,
+//               modified: Number,
 //               day: Number,
 //               month: Number,
 //               year: Number,
@@ -21,8 +22,8 @@ Meteor.publish('projects', function () {
 //               privslug: String,
 //               projects_id: [String, ...]}
 Birthdays = new Meteor.Collection("birthdays");
-Meteor.publish('birthdays', function () {
-  return Birthdays.find();
+Meteor.publish('birthdays', function() {
+    return Birthdays.find();
 });
 
 // Donations -- {name: String,
@@ -36,9 +37,9 @@ Meteor.publish('birthdays', function () {
 //              birthday_id: String
 //              project_id: String}
 Donations = new Meteor.Collection("donations");
-Meteor.publish('donations', function (birthday_id) {
-  check(birthday_id, String);
-  return Donations.find({birthday_id: birthday_id});
+Meteor.publish('donations', function(birthday_id) {
+    check(birthday_id, String);
+    return Donations.find({
+        birthday_id: birthday_id
+    });
 });
-
-

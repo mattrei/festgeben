@@ -30,10 +30,21 @@
 <template name="birthday">
     <h1>GEBURTSTAG!!!</h1>
     {{#if editing}}
-        <div>
-          <div class="edit-title" contenteditable="true">{{ title }}</div>
-          <div class="edit-text" contenteditable="true">{{ text }}</div>
+        <div class="edit">
+          <textarea id="title-input" rows="2">{{ title }}</textarea>
         </div>
+        <div class="edit">
+          <textarea id="text-input" rows="20">{{ text }}</textarea>
+        </div>
+
+        {{#if isactive}}
+        <input type="button" id="btn-active" value="Geburtstag deaktivieren">
+        {{else}}
+        <input type="button" id="btn-active" value="Aktivieren!">
+        {{/if}}
+
+
+        <button id="btn-delete">Geburtstag löschen</button>
     {{else}}
         NO EDIT
         <h2>{{ title }}</h2>
