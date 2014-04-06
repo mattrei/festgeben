@@ -12,6 +12,17 @@ Template.birthdayForm.events({
     }
 })
 
+Template.birthdayForm.rendered = function () {
+   console.log("rendered new_customer");
+   $new_customer_form = $( '#new_birthday_form' );
+   if (! $new_customer_form) {
+      console.log("form not found.");
+      return;
+   }
+   $new_customer_form.parsley();
+   //$new_customer_form.parsley( 'addItem', '#new_customer_name' );
+};
+
 var donationsHandle = null;
 Deps.autorun(function() {
     var birthday_id = Session.get('birthday_id');
@@ -20,6 +31,7 @@ Deps.autorun(function() {
     else
         donationsHandle = null;
 });
+
 
 
 

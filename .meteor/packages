@@ -8,4 +8,7 @@ autopublish
 insecure
 iron-router
 blaze-layout
-upload-avatar
+less
+less-bootstrap-3
+less-fontawesome-4
+parsleyjs

@@ -1,18 +1,21 @@
 <template name="birthdayForm">
-  <form>
+  <form id="new_birthday_form">
     <div class="form-group">
-      <label for="dayInt">Tag</label>
       <input type="text" class="form-control" id="dayIntObject" value="{{day}}">
-      <label for="monthInt">Monat</label>
       <input type="text" class="form-control" id="monthIntObject" value="{{month}}">
     </div>
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="nameObject" value="{{name}}">
     </div>
-    <div class="form-group">
-      <label for="owner">E-mail</label>
-      <input type="text" class="form-control" id="ownerObject" value="{{owner}}">
+    <div class="control-group">
+        <div class="controls">
+            <input type="email" data-parsley-trigger="change" id="email" placeholder="E-Mail Adresse"
+                parsley-notblank="true"
+                parsley-type="email"
+                parsley-trigger="keyup" >
+            <p class="help-block"></p>
+        </div>
     </div>
     <button type="submit" class="btn btn-default">Fest spenden</button>
   </form>
