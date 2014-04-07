@@ -16,7 +16,7 @@ Meteor.publish('projects', function() {
 //               month: Number,
 //               year: Number,
 //               active: Boolean,
-//               pic: String,
+//               pic: BASE64,
 //               owner: String,
 //               slug: String,
 //               privslug: String,

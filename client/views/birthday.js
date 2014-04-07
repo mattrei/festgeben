@@ -1,6 +1,8 @@
 Template.birthdayForm.events({
     'submit form': function(evt, tpl) {
+
         evt.preventDefault();
+
         Birthdays.insert({
             title: $('#name').val(),
             owner: $('#mail').val(),
@@ -10,18 +12,7 @@ Template.birthdayForm.events({
             timestamp: (new Date()).getTime()
         });
     }
-})
-
-Template.birthdayForm.rendered = function () {
-   console.log("rendered new_customer");
-   $new_customer_form = $( '#new_birthday_form' );
-   if (! $new_customer_form) {
-      console.log("form not found.");
-      return;
-   }
-   $new_customer_form.parsley();
-   //$new_customer_form.parsley( 'addItem', '#new_customer_name' );
-};
+});
 
 var donationsHandle = null;
 Deps.autorun(function() {
@@ -62,6 +53,8 @@ Template.birthday.events({
             }
         });
     }
+
+
 });
 
 
@@ -73,3 +66,31 @@ Template.birthday.helpers({
         return Session.equals('editBirthday', this.privslug);
     }
 });
+
+
+
+FileReaderObject = {
+    previewImage: function(file, callback) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // check file
+            if (!_.contains(FILEUPLOAD.IMG.TYPE, file.type)) {
+                callback(new Meteor.Error(412, "File format not supported. Please upload .jpg, .png or .gif"));
+                return;
+            }
+            // check size
+            if (file.size > FILEUPLOAD.IMG.MAXSIZE) {
+                callback(new Meteor.Error(412, "File is too large. 1512kb is the size limit"));
+                return;
+            }
+            file.result = e.target.result;
+            callback(null, file);
+        };
+        reader.onerror = function() {
+            callback(reader.error);
+        };
+
+        reader.readAsDataURL(file);
+    }
+};
+

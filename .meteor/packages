@@ -9,6 +9,5 @@ insecure
 iron-router
 blaze-layout
 less
-less-bootstrap-3
-less-fontawesome-4
-parsleyjs
+Mesosphere
+semantic-ui

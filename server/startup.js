@@ -35,7 +35,6 @@ Meteor.startup(function() {
             month: 6,
             year: 2014,
             active: true,
-            pic: "public/cc.jpg",
             owner: "chr@chr.at",
             slug: "b1",
             privslug: "secret",
@@ -49,11 +48,11 @@ Meteor.startup(function() {
             month: data.month,
             year: data.year,
             active: data.active,
-            pic: data.pic,
             owner: data.owner,
             slug: data.slug,
             privslug: data.privslug,
-            projects_id: data.projects_id
+            projects_id: data.projects_id,
+            pic: AVATAR
         });
     }
 

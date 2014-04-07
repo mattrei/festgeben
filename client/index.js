@@ -64,9 +64,11 @@ Router.map(function() {
                     privslug: this.params.edit
                 });
             } else
+                // only active birthdays for the public
                 return Birthdays.findOne({
                     year: parseInt(this.params[0]),
-                    slug: this.params[1]
+                    slug: this.params[1],
+                    active: true
                 });
         },
 
@@ -77,3 +79,9 @@ Router.map(function() {
     });
 
 });
+
+Template.myMod.rendered = function(){
+    //$('.ui.dropdown').dropdown();
+    $('.ui.modal').modal('attach events', '.test.button', 'show');
+;
+}

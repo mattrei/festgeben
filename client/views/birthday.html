@@ -1,24 +1,38 @@
 <template name="birthdayForm">
-  <form id="new_birthday_form">
-    <div class="form-group">
-      <input type="text" class="form-control" id="dayIntObject" value="{{day}}">
-      <input type="text" class="form-control" id="monthIntObject" value="{{month}}">
+    <div class="ui form">
+  <form name="birthdayForm" id="birthday-form" novalidate>
+
+    <div class="inline fields">
+    <div class="field">
+      <label>Wann ist das Fest?</label>
+      <input type="text" class="form-control" name="day" placeholder="TT">
+        <span id='day-error'></span>
     </div>
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="nameObject" value="{{name}}">
+    <div class="field">
+      <input type="text" class="form-control" name="month" placeholder="MM">
+        <span id='month-error'></span>
     </div>
-    <div class="control-group">
-        <div class="controls">
-            <input type="email" data-parsley-trigger="change" id="email" placeholder="E-Mail Adresse"
-                parsley-notblank="true"
-                parsley-type="email"
-                parsley-trigger="keyup" >
-            <p class="help-block"></p>
+    </div>
+
+    <div class="ui fluid">
+    <div class="field">
+      <input type="text" class="form-control" name="name" placeholder="Dein Name" required>
+        <span id='name-error'></span>
+    </div>
+    </div>
+
+      	<div class="field">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Deine Email" required>
+            <span id='email-error'></span>
         </div>
-    </div>
-    <button type="submit" class="btn btn-default">Fest spenden</button>
+
+      <div class="field">
+      <i class="heart circular icon link" data-content="Hello, I am a pop-up."></i>
+    <button type="submit" class="ui blue submit button">Fest spenden</button>
+          </div>
   </form>
+
+        </div>
 </template>
 
 
@@ -34,10 +48,10 @@
     <h1>GEBURTSTAG!!!</h1>
     {{#if editing}}
         <div class="edit">
-          <textarea id="title-input" rows="2">{{ title }}</textarea>
+          <textarea id="title-input" class="form-control" rows="2">{{ title }}</textarea>
         </div>
         <div class="edit">
-          <textarea id="text-input" rows="20">{{ text }}</textarea>
+          <textarea id="text-input" class="form-control" rows="20">{{ text }}</textarea>
         </div>
 
         {{#if isactive}}
@@ -48,13 +62,31 @@
 
 
         <button id="btn-delete">Geburtstag löschen</button>
+
+
+        <div class="ui fade reveal">
+          <img id="change-pic" class="visible content" src="{{ pic }}">
+          <img class="hidden content" src="{{ AVATAR }}">
+        </div>
+
+
+        {{> editYourAvatarModal}}
+
     {{else}}
         NO EDIT
         <h2>{{ title }}</h2>
         <p>{{ text }}</p>
+
+    <div class="ui inverted circular segment">
+      <h2 class="ui inverted header">
+        Spende
+      </h2>
+    </div>
     {{/if}}
 </template>
 
 <template name="birthdayNotFound">
     <h1>GEBURTSTAG NICHT GEFUNDEN!!!</h1>
 </template>
+
+

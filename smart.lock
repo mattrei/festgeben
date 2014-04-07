@@ -5,7 +5,9 @@
       "iron-router": {},
       "less-bootstrap-3": {},
       "less-fontawesome-4": {},
-      "parsleyjs": {}
+      "Mesosphere": {},
+      "jqbootstrapvalidation": {},
+      "semantic-ui": {}
     },
     "packages": {
       "iron-router": {
@@ -23,15 +25,30 @@
         "tag": "v0.0.1",
         "commit": "f40d8d5e0794325aedddd4aeedd1e9cfb47ca133"
       },
-      "parsleyjs": {
-        "git": "https://github.com/nate-strauser/meteor-parsleyjs.git",
-        "tag": "v1.1.7",
-        "commit": "035a1e56a78e50369686b7e281aa71e3daf3729a"
+      "Mesosphere": {
+        "git": "https://github.com/copleykj/Mesosphere.git",
+        "tag": "v0.1.9",
+        "commit": "dc63582fa5d3a4dc3952a80bead9625ef4ab259b"
+      },
+      "jqbootstrapvalidation": {
+        "git": "https://github.com/nate-strauser/meteor-jqbootstrapvalidation.git",
+        "tag": "v0.1.0",
+        "commit": "2af4625d41a9b24311544a53790f14fa38c27b10"
+      },
+      "semantic-ui": {
+        "git": "https://github.com/nooitaf/meteor-semantic-ui.git",
+        "tag": "v0.15.2",
+        "commit": "aafa100ef174a644ebfc426c3f7ee922032e2a10"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.2",
         "commit": "8bc53798fe5965669ae67c72f91829fcfdceabfd"
+      },
+      "underscore-string-latest": {
+        "git": "https://github.com/TimHeckel/meteor-underscore-string.git",
+        "tag": "v2.3.3",
+        "commit": "4a5d70eee48fbd90a6e6fc78747250d704a0b3bb"
       }
     }
   }
