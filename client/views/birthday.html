@@ -1,38 +1,37 @@
 <template name="birthdayForm">
     <div class="ui form">
-  <form name="birthdayForm" id="birthday-form" novalidate>
+      <form name="birthdayForm" id="birthday-form" novalidate>
 
-    <div class="inline fields">
-    <div class="field">
-      <label>Wann ist das Fest?</label>
-      <input type="text" class="form-control" name="day" placeholder="TT">
-        <span id='day-error'></span>
-    </div>
-    <div class="field">
-      <input type="text" class="form-control" name="month" placeholder="MM">
-        <span id='month-error'></span>
-    </div>
-    </div>
-
-    <div class="ui fluid">
-    <div class="field">
-      <input type="text" class="form-control" name="name" placeholder="Dein Name" required>
-        <span id='name-error'></span>
-    </div>
-    </div>
-
-      	<div class="field">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Deine Email" required>
-            <span id='email-error'></span>
+        <div class="inline fields">
+        <div class="field">
+          <label>Wann ist das Fest?</label>
+          <input type="text" class="form-control" name="day" placeholder="TT">
+            <span id='day-error'></span>
+        </div>
+        <div class="field">
+          <input type="text" class="form-control" name="month" placeholder="MM">
+            <span id='month-error'></span>
+        </div>
         </div>
 
-      <div class="field">
-      <i class="heart circular icon link" data-content="Hello, I am a pop-up."></i>
-    <button type="submit" class="ui blue submit button">Fest spenden</button>
-          </div>
-  </form>
-
+        <div class="ui fluid">
+        <div class="field">
+          <input type="text" class="form-control" name="name" placeholder="Dein Name" required>
+            <span id='name-error'></span>
         </div>
+        </div>
+
+            <div class="field">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Deine Email" required>
+                <span id='email-error'></span>
+            </div>
+
+          <div class="field">
+          <i class="heart circular icon link" data-content="Hello, I am a pop-up."></i>
+        <button type="submit" class="ui blue submit button">Fest spenden</button>
+              </div>
+      </form>
+    </div>
 </template>
 
 
@@ -45,7 +44,6 @@
 </template>
 
 <template name="birthday">
-    <h1>GEBURTSTAG!!!</h1>
     {{#if editing}}
         <div class="edit">
           <textarea id="title-input" class="form-control" rows="2">{{ title }}</textarea>
@@ -70,19 +68,121 @@
         </div>
 
 
-        {{> editYourAvatarModal}}
+        {{> changePic}}
 
     {{else}}
-        NO EDIT
+
         <h2>{{ title }}</h2>
         <p>{{ text }}</p>
 
-    <div class="ui inverted circular segment">
-      <h2 class="ui inverted header">
-        Spende
-      </h2>
-    </div>
+
+<!--
+        <div class="ui inverted circular segment">
+          <h2 class="ui inverted header">
+            Spende
+          </h2>
+        </div>
+-->
     {{/if}}
+
+    {{> donationForm }}
+
+    {{> donations }}
+</template>
+
+<template name="donationForm">
+    <div class="ui form">
+      <form name="donationForm" id="donation-form" novalidate>
+
+        <div class="inline fields">
+            <div class="field">
+              <input type="text" class="form-control" name="firstname" placeholder="Vorname">
+                <span id='firstname-error'></span>
+            </div>
+            <div class="field">
+              <input type="text" class="form-control" name="lastname" placeholder="Nachname">
+                <span id='lastname-error'></span>
+            </div>
+        </div>
+        <div class="field">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Deine Email" required>
+            <span id='email-error'></span>
+        </div>
+
+        <div class="inline field">
+            <label>Dein Beitrag (in Euro)</label>
+            <input type="text" class="form-control" name="amount" placeholder="" required>
+            <span id='number-error'></span>
+        </div>
+
+
+        <div class="ui fluid accordion">
+          <div class="title">
+            <i class="dropdown icon"></i>
+            Kommentar hinzufügen?
+          </div>
+          <div class="content">
+            <div class="field">
+                <textarea class="form-control" name="comment" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+
+          <div class="inline field">
+            <div class="ui checkbox">
+              <input type="checkbox">
+              <label>Ich möchte regelmäßig spenden (Dauerauftrag)</label>
+            </div>
+          </div>
+          <div class="inline field">
+            <div class="ui checkbox">
+              <input type="checkbox">
+              <label>Ich möchte mich zum Projekt Newsletter anmelden</label>
+            </div>
+          </div>
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox">
+              <label>Ich möchte nicht als Spender auf dieser Seite genannt werden</label>
+            </div>
+          </div>
+
+          <div class="ui blue submit button">Spenden</div>
+      </form>
+    </div>
+</template>
+
+<template name="donations">
+  {{#if loading}}
+    <div id="lists">Lade Spenden...</div>
+  {{else}}
+    <table class="ui basic table">
+      <thead>
+        <tr><th>Name</th>
+        <th>Datum</th>
+        <th>Kommentar</th>
+      </tr></thead>
+      <tbody>
+      {{#each donations}}
+        {{#unless anonym}}
+            {{> donation}}
+          {{/unless}}
+      {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+</template>
+
+<template name="donation">
+    <tr>
+    {{#if url}}
+      <td><a href="{{url}}">{{ firstname }} {{ lastname }}</a></td>
+    {{else}}
+      <td>{{ firstname }} {{ lastname }}</td>
+    {{/if}}
+      <td>{{ formatDate timestamp }}</td>
+      <td>{{ comment }}</td>
+    </tr>
 </template>
 
 <template name="birthdayNotFound">

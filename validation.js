@@ -58,19 +58,19 @@ Meteor.methods({
             if (!errors) {
 
                 // calculate year
-                day = parseInt(formData.day);
-                month = parseInt(formData.month);
-                today = new Date();
-                year = today.getFullYear();
+                var day = parseInt(formData.day);
+                var month = parseInt(formData.month);
+                var today = new Date();
+                var year = today.getFullYear();
 
-                tmp = new Date(year, month - 1, day)
+                var tmp = new Date(year, month - 1, day)
                 if (today.getTime() > tmp.getTime()) {
                 // next year
                     year += 1;
                 }
 
 
-                Birthdays.insert({
+                var id = Birthdays.insert({
                     title: formData.name + "s Fest",
                     text: "Beispieltext...",
                     owner: formData.email,
@@ -80,9 +80,22 @@ Meteor.methods({
                     slug: formData.name,
                     active: true,
                     timestamp: (new Date()).getTime(),
-                    // TODO
+                    // TODO use id
                     privslug: "secret"
                 });
+
+                var url = Router.path('home') + '/' + year + '/' + formData.name;
+                var ownerUrl = url + '?edit=' + id;
+
+
+                Meteor.call('sendEmail',
+                    $('#mail').val(),
+                    MAIL_FROM,
+                    'Geburtstag angelegt',
+                    'Ihr Geburtstag wurde angelegt.\n\
+                    Sie finden ihr Seite auf ' + url + '\n\
+                    um die Seite zu editieren benutze diesen Link: ' + ownerUrl + '\n\n\n\
+                    Vielen Dank');
 
             } else {
                 _(errors).each(function(value, key) {

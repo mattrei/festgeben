@@ -5,23 +5,11 @@ Donations = new Meteor.Collection("donations");
 
 Session.setDefault('editBirthday', null);
 
-// Subscribe to 'lists' collection on startup.
-// Select a list once data has arrived.
-var projectsHandle = Meteor.subscribe('projects', function() {});
 
-var donationsHandle = null;
-// Always be subscribed to the todos for the selected list.
-Deps.autorun(function() {
-    var birthday_id = Session.get('birthday_id');
-    if (birthday_id)
-        donationsHandle = Meteor.subscribe('donations', birthday_id);
-    else
-        donationsHandle = null;
-});
+var projectsHandle = Meteor.subscribe('projects', function() {});
 
 
 ////////// Projects //////////
-
 Template.projects.loading = function() {
     return !projectsHandle.ready();
 };
@@ -55,33 +43,33 @@ Router.map(function() {
         },
 
         data: function() {
+            var b;
             if (this.params.edit) {
-                Session.set('editBirthday', this.params.edit);
                 //TODO change privslug to _id
-                return Birthdays.findOne({
+                b = Birthdays.findOne({
                     year: parseInt(this.params[0]),
                     slug: this.params[1],
                     privslug: this.params.edit
                 });
-            } else
+            } else {
                 // only active birthdays for the public
-                return Birthdays.findOne({
+                b = Birthdays.findOne({
                     year: parseInt(this.params[0]),
                     slug: this.params[1],
                     active: true
                 });
+            }
+
+            if (b)
+                Session.set('birthday_id', b._id);
+
+            return b;
         },
 
         onStop: function() {
-            Session.set('editBirthday', null);
+            Session.set('birthday_id', null);
         }
 
     });
 
 });
-
-Template.myMod.rendered = function(){
-    //$('.ui.dropdown').dropdown();
-    $('.ui.modal').modal('attach events', '.test.button', 'show');
-;
-}

@@ -6,3 +6,18 @@ FILEUPLOAD = {
         MAXSIZE: 1512000
     } // 1512 kb
 };
+
+MAIL_FROM = "festgeben@festgeben.at";
+
+UI.registerHelper("formatDate", function(timestamp) {
+    return new Date(timestamp).toString('dd/MM/yyyy')
+    /*
+  if (moment) {
+    f = DateFormats[format];
+    return moment(datetime).format(f);
+  }
+  else {
+    return datetime;
+  }
+  */
+});

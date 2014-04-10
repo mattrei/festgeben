@@ -8,19 +8,18 @@ var x, // x position of crop image
     error, //
     modal,
     realImage,
-    displayImage,
-    isShowCropAndButton = false;
+    displayImage;
 
-var widthAvatar = 200,
-    heightAvatar = 200;
+var widthAvatar = 128,
+    heightAvatar = 128;
 
-Template.editYourAvatarModalBody.image = function() {
+Template.changePicModalBody.image = function() {
     if (this.pic)
         return this.pic
     else
         return AVATAR;
 };
-Template.editYourAvatarModal.rendered = function() {
+Template.changePic.rendered = function() {
 
     var tmpl = this;
 
@@ -44,13 +43,13 @@ Template.editYourAvatarModal.rendered = function() {
             });
         }
     }).modal('attach events', '#change-pic', 'show');
-
-    error = $(tmpl.find('.error'));
-    realImage = tmpl.find('#realImage');
 };
 
-Template.editYourAvatarModalBody.rendered = function() {
+Template.changePicModalBody.rendered = function() {
     displayImage = $(this.find('#avatarUserImg'));
+    realImage = $(this.find('#realImage'));
+    realImage.hide();
+    error = $(this.find('.error'));
     $(function() {
         displayImage.imgAreaSelect({
             aspectRatio: '1:1',
@@ -64,8 +63,8 @@ Template.editYourAvatarModalBody.rendered = function() {
 /**
  * EVENTS
  */
-Template.editYourAvatarModalBody.events({
-    "change input[name=avatarFile]": function(evt, tmpl) {
+Template.changePicModalBody.events({
+    'change input[name=avatarFile]': function(evt, tmpl) {
         evt.preventDefault();
         var input = tmpl.find('input[name=avatarFile]');
         if (input.files && input.files[0]) {
@@ -88,16 +87,32 @@ Template.editYourAvatarModalBody.events({
                 }
             });
         }
-    },
-    'click #changeAvatarButton': function(evt, tmp) {
-        evt.preventDefault();
-        tmp.find('input[name=avatarFile]').click();
     }
 });
-Template.editYourAvatarModal.events({
-    'click #save-pic': function(evt, tmp) {
+
+Template.changePicModal.events({
+    'click #save-pic': function(evt) {
         evt.preventDefault();
-        processChangeAvatar(tmp);
+        var canvas = document.createElement("canvas");
+        canvas.width = widthAvatar;
+        canvas.height = heightAvatar;
+        var scaleX = realImage.width() / displayImage.width();
+        var scaleY = realImage.height() / displayImage.height();
+        var ctx = canvas.getContext("2d");
+
+        var img = new Image();
+        img.src = realImage.src;
+        alert(scaleX + " " + scaleY + " " + width + " " + height + " " + x + " " + y);
+
+        image = $('#realImage');
+
+        ctx.drawImage(image, x * scaleX, y * scaleY, width * scaleX, height * scaleY, 0, 0, widthAvatar, heightAvatar);
+
+        Birthdays.update(this._id, {
+            $set: {
+                'pic': canvas.toDataURL()
+            }
+        });
     }
 });
 /**
@@ -112,6 +127,15 @@ var processChangeAvatar = function(tmp) {
     var ctx = canvas.getContext("2d");
     ctx.drawImage(realImage, x * scaleX, y * scaleY, width * scaleX, height * scaleY, 0, 0, widthAvatar, heightAvatar);
 
+    Birthdays.update({
+        _id: id
+    }, {
+        $set: {
+            'pic': canvas.toDataURL()
+        }
+    });
+
+    /*
     Meteor.call('updatePic', canvas.toDataURL(), function(err, res) {
         if (err) {
             error.html(createAlertDanger(err.message));
@@ -122,6 +146,7 @@ var processChangeAvatar = function(tmp) {
             modal.modal('hide');
         }
     });
+    */
 };
 
 function preview(img, selection) {
@@ -139,9 +164,6 @@ function preview(img, selection) {
     y = selection.y1;
     width = selection.width;
     height = selection.height;
-    if (!isShowCropAndButton) {
-        open();
-    }
 };
 
 function loadImage(tmp, src) {
@@ -150,20 +172,38 @@ function loadImage(tmp, src) {
     $(tmp.find('#realImage')).attr('src', src);
 };
 
-function open() {
-    $('#previewFrame').removeClass('hide');
-    isShowCropAndButton = true;
-};
-
 function clear() {
     // hide crop area
     $('.imgareaselect-border1').parent().hide();
     $('.imgareaselect-outer').hide();
-    isShowCropAndButton = false;
-    $('#previewFrame').addClass('hide');
     // reset input
     //http://stackoverflow.com/questions/16452699/how-to-reset-a-form-using-jquery-with-reset-method
     var inputAvatar = $('input[name=avatarFile]');
     inputAvatar.wrap('<form>').closest('form').get(0).reset();
     inputAvatar.unwrap();
+};
+
+FileReaderObject = {
+    previewImage: function(file, callback) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // check file
+            if (!_.contains(FILEUPLOAD.IMG.TYPE, file.type)) {
+                callback(new Meteor.Error(412, "File format not supported. Please upload .jpg, .png or .gif"));
+                return;
+            }
+            // check size
+            if (file.size > FILEUPLOAD.IMG.MAXSIZE) {
+                callback(new Meteor.Error(412, "File is too large. 1512kb is the size limit"));
+                return;
+            }
+            file.result = e.target.result;
+            callback(null, file);
+        };
+        reader.onerror = function() {
+            callback(reader.error);
+        };
+
+        reader.readAsDataURL(file);
+    }
 };

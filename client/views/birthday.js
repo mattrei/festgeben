@@ -1,19 +1,4 @@
-Template.birthdayForm.events({
-    'submit form': function(evt, tpl) {
-
-        evt.preventDefault();
-
-        Birthdays.insert({
-            title: $('#name').val(),
-            owner: $('#mail').val(),
-            day: parseInt($('#dayInt').val()),
-            month: parseInt($('#monthInt').val()),
-            active: true,
-            timestamp: (new Date()).getTime()
-        });
-    }
-});
-
+////////// Donations //////////
 var donationsHandle = null;
 Deps.autorun(function() {
     var birthday_id = Session.get('birthday_id');
@@ -23,9 +8,20 @@ Deps.autorun(function() {
         donationsHandle = null;
 });
 
+Template.donations.loading = function() {
+    return !donationsHandle.ready();
+};
+
+Template.donations.donations = function() {
+    return Donations.find({}, {
+        sort: {
+            donated: 1
+        }
+    });
+};
 
 
-
+////////// Birthday //////////
 Template.birthday.events({
     'blur #title-input': function(evt) {
         var value = String(evt.target.value || "");
@@ -67,30 +63,7 @@ Template.birthday.helpers({
     }
 });
 
-
-
-FileReaderObject = {
-    previewImage: function(file, callback) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            // check file
-            if (!_.contains(FILEUPLOAD.IMG.TYPE, file.type)) {
-                callback(new Meteor.Error(412, "File format not supported. Please upload .jpg, .png or .gif"));
-                return;
-            }
-            // check size
-            if (file.size > FILEUPLOAD.IMG.MAXSIZE) {
-                callback(new Meteor.Error(412, "File is too large. 1512kb is the size limit"));
-                return;
-            }
-            file.result = e.target.result;
-            callback(null, file);
-        };
-        reader.onerror = function() {
-            callback(reader.error);
-        };
-
-        reader.readAsDataURL(file);
-    }
+Template.donationForm.rendered = function() {
+    $('.ui.accordion').accordion();
+    $('.ui.checkbox').checkbox();
 };
-

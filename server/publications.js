@@ -26,7 +26,8 @@ Meteor.publish('birthdays', function() {
     return Birthdays.find();
 });
 
-// Donations -- {name: String,
+// Donations -- {firstname: String,
+//              lastname: String,
 //              mail: String,
 //              url: String,
 //              comment: String,

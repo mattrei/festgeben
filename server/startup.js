@@ -28,7 +28,7 @@ Meteor.startup(function() {
         }
 
         var data = {
-            title: "Christoph Chorherrs 50. Geburtstag",
+            title: "Christoph Chorhers 50. Geburtstag",
             text: "Schreib hier warum ....",
             created: (new Date()).getTime(),
             day: 14,
@@ -40,7 +40,8 @@ Meteor.startup(function() {
             privslug: "secret",
             projects_id: ["1", "2"]
         };
-        Birthdays.insert({
+
+        var bid = Birthdays.insert({
             title: data.title,
             text: data.text,
             timestamp: data.timestamp,
@@ -53,6 +54,20 @@ Meteor.startup(function() {
             privslug: data.privslug,
             projects_id: data.projects_id,
             pic: AVATAR
+        });
+
+        Donations.insert({
+            firstname: "Matthias",
+            lastname: "Treitler",
+            timestamp: (new Date()).getTime(),
+            url: "www.festgeben.at",
+            comment: "Ein echt gute Gelegenheit um zu spenden",
+            amount: 20,
+            always: false,
+            anonym: false,
+            newsletter: true,
+            birthday_id: bid,
+            project_id: 1
         });
     }
 

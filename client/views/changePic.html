@@ -1,13 +1,21 @@
-<template name="editYourAvatarModal">
+<template name="changePic">
 
     <div id="editYourAvatarModal" class="ui modal">
+        {{> changePicModal}}
+    </div>
+
+</template>
+
+<template name="changePicModal">
+
+
         <i class="close icon"></i>
-        <div class="header">Bild auswählen & anpassen</div>
+        <div class="header">Bild auswählen & ausschneiden</div>
         <div class="content">
-            {{> editYourAvatarModalBody}}
+            {{> changePicModalBody}}
         </div>
 
-        <div class="error"></div>
+
         <div class="actions">
 
             <div class="ui buttons">
@@ -16,26 +24,28 @@
               <div id="save-pic" class="ui positive button">Speichern</div>
             </div>
         </div>
-    </div>
 
 </template>
 
-<template name="editYourAvatarModalBody">
+<template name="changePicModalBody">
 
-
+    <div class="error"></div>
     <div class="left">
-      <!--<img id="realImage" src="{{ image }}" class="hide" alt="" />-->
-        <img id="avatarUserImg" src="{{ image }}" class="" alt="" />
+
+        <!-- hidden always by default -->
+        <img id="realImage" src="{{ image }}" alt="" />
+
+
+        <img id="avatarUserImg" src="{{ image }}" alt="" />
 
         <div class="ui file input">
-            <input type="file" name="avatarFile" class="hide" />
+            <input type="file" name="avatarFile" />
         </div>
-            <!--<input type="button" id="changeAvatarButton" value="Change My Avatar" />-->
     </div>
     <div class="right">
         <div id="previewFrame" class="hide">
                 <div id="preview">
-                    <img src="{{ image }}"/>
+                    <img src="{{ image }}" alt=""/>
                 </div>
              </div>
     </div>
